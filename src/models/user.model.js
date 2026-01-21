@@ -16,7 +16,7 @@ const userSchema = new Schema(
             type: String,
             required: true,
             unique: true,
-            lowecase: true,
+            lowercase: true,
             trim: true, 
         },
         fullName: {
@@ -54,12 +54,11 @@ const userSchema = new Schema(
 
 
 //this pre is mongoose middleware used just before saving anything to database
-userSchema.pre("save", async function (next) {
-    //isModified is builtin function
-    if(!this.isModified("password")) return next();
-    this.password = await bcrypt.hash(this.password, 10)
-    next()
-})
+userSchema.pre("save", async function () {
+    if (!this.isModified("password")) return;
+    this.password = await bcrypt.hash(this.password, 10);
+});
+
 
 
 userSchema.methods.isPasswordCorrect = async function(password){
