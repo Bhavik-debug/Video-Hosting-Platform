@@ -63,6 +63,7 @@ userSchema.pre("save", async function () {
 
 userSchema.methods.isPasswordCorrect = async function(password){
     return await bcrypt.compare(password, this.password)
+    //When bcrypt.compare is called, it takes the hashed password stored in the database and extracts the salt embedded inside that hash. It then hashes the entered (plain text) password again using the same salt, ensuring the hashing conditions are identical. After that, it compares the newly generated hash with the stored hash, and based on this comparison, it returns true if they match or false if they don’t.
 }
 
 
